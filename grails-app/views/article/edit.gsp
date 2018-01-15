@@ -29,7 +29,7 @@
             <g:form resource="${this.article}" method="PUT">
                 <g:hiddenField name="version" value="${this.article?.version}" />
                 <fieldset class="form">
-                    <f:all bean="article"/>
+                    <f:all bean="article" except="publishDate, editDate, lastEditBy, author"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />

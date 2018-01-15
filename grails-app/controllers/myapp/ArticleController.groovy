@@ -1,11 +1,13 @@
 package myapp
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 
 class ArticleController {
 
     ArticleService articleService
+    HomeService homeService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -29,6 +31,8 @@ class ArticleController {
         }
 
         try {
+            article.publishDate = new Date()
+            article.author = session.name ?: 'Unknown'
             articleService.save(article)
         } catch (ValidationException e) {
             respond article.errors, view:'create'
@@ -55,6 +59,8 @@ class ArticleController {
         }
 
         try {
+            article.editDate = new Date()
+            article.lastEditBy = session.name ?: 'Unknown'
             articleService.save(article)
         } catch (ValidationException e) {
             respond article.errors, view:'edit'
